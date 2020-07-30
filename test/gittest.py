@@ -1,0 +1,1 @@
+print("Robots will conquer the world")
