@@ -1,0 +1,235 @@
+<?xml version="1.0"?>
+  <robot xmlns:xacro="http://ros.org/wiki/xacro" name="v2_left_hand">
+
+  <xacro:property name="scale" value="0.001" />
+  <xacro:property name="laj_1_l" value="-3.14159" />
+  <xacro:property name="laj_1_u" value="3.14159"  />
+
+  <xacro:property name="laj_2_l" value="-3.14159" />
+  <xacro:property name="laj_2_u" value="3.14159"  />
+
+  <xacro:property name="laj_3_l" value="-3.14159" />
+  <xacro:property name="laj_3_u" value="3.14159"  />
+
+  <xacro:property name="laj_4_l" value="-3.14159" />
+  <xacro:property name="laj_4_u" value="3.14159"  />
+
+  <!--
+
+    4 links, 4 joints plus one gripper
+
+    laj_(index)  ->    laj stands for left arm joint
+    lal_(index)  ->    lal stands for left arm link
+    lg_(index)  ->    lg stands for left gripper
+
+                    *
+                   ***  Shoulder (not in this file) Here is the stepper motor
+                    *
+                    |
+                    |   
+                    |  base_link
+                    |
+                    |
+                    *
+                   *** laj_1        Servo Motor 2 
+                    *
+                    |
+                    |  lal_2
+                    |
+                    *
+                   *** laj_2        Servo Motor 3 (axis along the hand)
+                    *
+                    |
+                    |
+                    |  lal_3
+                    |
+                    |
+                    *
+                   *** laj_3         Servo Motor 4 (Elbow Joint)
+                    *
+                    |
+                    |  
+                    |
+                    |
+                    | 
+                    |
+                    |  lal_4
+                    |  
+                    |
+                    |
+                    |
+                    |
+                    *
+                   *** laj_4 Servo Motor 5 (Before Gripper Joint (or) Gripper Roll)
+                    *
+                 ___|____
+                 |       |
+                | |     | |    lg_1   this is the Gripper
+                | |     | |
+                | |     | |
+                 
+
+  -->
+
+  <xacro:macro name="arm" params="prefix">
+
+     <link name="${prefix}_link_1">
+       <visual>
+          <geometry>   
+            <mesh filename="package://anya_v2/meshes/c5.dae" scale="${scale} ${scale} ${scale}"/>                  
+          </geometry>
+          <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>         
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/c5.stl" scale="${scale} ${scale} ${scale}"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.016"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+     <link name="${prefix}_link_2">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/c4.dae" scale="${scale} ${scale} ${scale}"/>
+        </geometry>
+        <origin xyz="0.0 -0.005 0.0" rpy="0.0 0.0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/c4.stl" scale="${scale} ${scale} ${scale}"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.237"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+     <link name="${prefix}_link_3">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/c3.dae" scale="${scale} ${scale} ${scale}"/>
+        </geometry>
+        <origin xyz="-0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/c3.stl" scale="${scale} ${scale} ${scale}"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.131"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+     <link name="${prefix}_link_4">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/c2.dae" scale="${scale} ${scale} ${scale}"/>
+        </geometry>
+        <origin xyz="0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/c2.stl" scale="${scale} ${scale} ${scale}"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.146"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+
+
+     <link name="${prefix}_gripper_1">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/gripper.dae" scale="${scale} ${scale} ${scale}"/>
+        </geometry>
+        <origin xyz="-0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/gripper.stl" scale="${scale} ${scale} ${scale}"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.083"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+
+
+
+     <joint name="${prefix}_joint_1" type="revolute">
+       <parent link="${prefix}_link_1"/>
+       <child link="${prefix}_link_2"/>
+       <axis xyz="0 1 0"/>
+       <limit lower="${laj_1_l}" upper="${laj_1_u}" velocity="50.0" effort="1000.0"/>
+       <origin xyz="0 -0.0 0" rpy="0 0 0"/>
+     </joint> 
+      
+     <joint name="${prefix}_joint_2" type="revolute">
+       <parent link="${prefix}_link_2"/>
+       <child link="${prefix}_link_3"/>
+       <axis xyz="1 0 0"/>
+       <limit lower="${laj_2_l}" upper="${laj_2_u}" velocity="50.0" effort="1000.0"/>
+       <origin xyz="-0.130 0.025 0.0" rpy="0 0 0"/>
+     </joint>
+     
+     <joint name="${prefix}_joint_3" type="revolute">
+       <parent link="${prefix}_link_3"/>
+       <child link="${prefix}_link_4"/>
+       <axis xyz="0 0 1"/>
+       <limit lower="${laj_3_l}" upper="${laj_3_u}" velocity="50.0" effort="1000.0"/>
+       <origin xyz="-0.13950 -0.004 -0.02250" rpy="0 0 0"/>
+     </joint>
+     
+     <joint name="${prefix}_joint_4" type="revolute">
+       <parent link="${prefix}_link_4"/>
+       <child link="${prefix}_gripper_1"/>
+       <axis xyz="1 0 0"/>
+       <limit lower="${laj_4_l}" upper="${laj_4_u}" velocity="50.0" effort="1000.0"/>
+       <origin xyz="-0.17 0.0 0.02" rpy="0 0 0"/>
+     </joint>   
+</xacro:macro>   
+
+
+    <!-- just in case
+
+
+    <joint name="laj_5" type="revolute">
+       <parent link="lal_1"/>
+       <child link="ral_1"/>
+       <axis xyz="1 0 0"/>
+       <limit lower="${laj_4_l}" upper="${laj_4_u}" velocity="50.0" effort="1000.0"/>
+       <origin xyz="-0.17 0.0 0.02" rpy="0 0 0"/>
+     </joint>  
+
+
+    -->
+
+    <!--
+     <link name="lg_1">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/c1.dae" scale="${scale} ${scale} ${scale}"/>
+        </geometry>
+        <origin xyz="-0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/c1.stl" scale="${scale} ${scale} ${scale}"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.083"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+     -->
+     
+
+  </robot>

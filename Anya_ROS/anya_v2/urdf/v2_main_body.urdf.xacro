@@ -1,0 +1,322 @@
+<?xml version="1.0"?>
+  <robot xmlns:xacro="http://ros.org/wiki/xacro" name="v2_main_body">
+
+  <xacro:include filename="$(find anya_v2)/urdf/v2_right_hand.urdf.xacro" />
+  <xacro:include filename="$(find anya_v2)/urdf/v2_left_hand.urdf.xacro"  />
+
+
+  <!-- including sensors -->
+  <xacro:include filename="$(find anya_v2)/urdf/kinect.urdf.xacro"  />
+
+  <xacro:property name="brs_l" value="-1.59" />
+  <xacro:property name="brs_u" value="1.59"  />
+
+  <xacro:property name="bls_l" value="-1.59" />
+  <xacro:property name="bls_u" value="1.59"  />
+
+  <xacro:property name="bh_l" value="-3.14159" />
+  <xacro:property name="bh_u" value="3.14159"  />
+
+  <xacro:property name="damping_value" value="10000" />
+  <xacro:property name="friction_value" value="10000" />
+
+   <link name="world">
+      <gazebo>
+        <turnGravityOff>true</turnGravityOff>
+      </gazebo>
+   </link>
+   <link name="body_link">
+       <visual name="">
+           <origin xyz="0.0 0.0 0.0" rpy="-1.5750 0.0 0.0"/>
+           <geometry>
+               <mesh filename="package://anya_v2/meshes/body.dae" scale="0.001 0.001 0.001"/>
+           </geometry>
+       </visual>
+       <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="-1.5750 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://anya_v2/meshes/body.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+       </collision>
+       <inertial>
+         <origin xyz="0.0 0.0 0.0" rpy="-1.575 0.0 0.0"/>
+         <mass value="0.5"/>
+         <inertia ixx="100.0" ixy="0.0" ixz="0.0" iyy="100.0" iyz="0.0" izz="100.0"/>
+       </inertial>
+        <gazebo>
+          <turnGravityOff>true</turnGravityOff>
+        </gazebo>       
+   </link>
+   
+   <joint name="world_joint" type="fixed">
+     <parent link="world"/>
+     <child link="body_link"/>
+     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+     <dynamics damping="${damping_value}" friction="${friction_value}"/>
+   </joint>
+   
+
+
+   <link name="right_disk">
+       <visual>
+          <geometry>   
+            <mesh filename="package://anya_v2/meshes/disc.dae" scale="0.001 0.001 0.001"/>                  
+          </geometry>
+          <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>         
+       </visual>
+        <inertial>
+         <origin xyz="0.0 0.0 0.0" rpy="-1.575 0.0 0.0"/>
+         <mass value="0.5"/>
+         <inertia ixx="100.0" ixy="0.0" ixz="0.0" iyy="100.0" iyz="0.0" izz="100.0"/>
+       </inertial>
+    </link>
+   
+    <link name="left_disk">
+       <visual>
+          <geometry>   
+            <mesh filename="package://anya_v2/meshes/disc.dae" scale="0.001 0.001 0.001"/>                  
+          </geometry>
+          <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>         
+       </visual>
+        <inertial>
+         <origin xyz="0.0 0.0 0.0" rpy="-1.575 0.0 0.0"/>
+         <mass value="0.5"/>
+         <inertia ixx="100.0" ixy="0.0" ixz="0.0" iyy="100.0" iyz="0.0" izz="100.0"/>
+       </inertial>
+     </link>
+
+
+     <joint name="right_sholder" type="revolute">
+         <parent link="body_link"/>
+         <child link="right_disk"/>
+         <axis xyz="0 1 0"/>
+         <limit lower="${brs_l}" upper="${brs_u}" velocity="1.0" effort="60.0"/>
+         <dynamics damping="${damping_value}" friction="${friction_value}"/>
+         <origin xyz="-0.16 -0.01 1.084" rpy="-1.575 1.575 0"/>
+     </joint>
+
+     <joint name="left_sholder" type="revolute">
+         <parent link="body_link"/>
+         <child link="left_disk"/>
+         <axis xyz="0 1 0"/>
+         <limit lower="${bls_l}" upper="${bls_u}" velocity="1.0" effort="60.0"/>
+         <dynamics damping="${damping_value}" friction="${friction_value}"/>
+         <origin xyz="0.16 -0.01 1.084" rpy="-1.575 1.575 0"/>
+     </joint>
+
+
+    <joint name="r1_joint" type="fixed">
+         <parent link="right_disk"/>
+         <child link="ral_1"/>
+         <origin xyz="0.0 0.039 0.025" rpy="1.575 3.14 0"/>
+         <dynamics damping="${damping_value}" friction="${friction_value}"/>
+    </joint>
+
+     <joint name="l1_joint" type="fixed">
+         <parent link="left_disk"/>
+         <child link="lal_1"/>
+         <origin xyz="0 -0.035 -0.025" rpy="-1.575 3.14 0"/>
+         <dynamics damping="${damping_value}" friction="${friction_value}"/>
+     </joint>
+     
+
+
+     <!--
+     <link name="gripper_link">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/gripper.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <origin xyz="-0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/gripper.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.083"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+     <joint name="gripper_joint" type="fixed">
+       <parent link="lc1_link"/>
+       <child link="gripper_link"/>
+       <origin xyz="-0.113 0.0 0.0" rpy="0 0 0"/>
+     </joint>
+-->
+    
+
+     
+
+
+     
+
+     <!--   
+     <link name="rgripper_link">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/gripper.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <origin xyz="-0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/gripper.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.083"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+     <joint name="rgripper_joint" type="fixed">
+       <parent link="c1_link"/>
+       <child link="rgripper_link"/>
+       <origin xyz="-0.113 0.0 0.0" rpy="0 0 0"/>
+     </joint>
+-->
+     <link name="head_link">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/head3.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <origin xyz="-0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/head3.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+        <inertial>
+         <origin xyz="0.0 0.0 0.0" rpy="-1.575 0.0 0.0"/>
+         <mass value="100.0"/>
+         <inertia ixx="100.0" ixy="0.0" ixz="0.0" iyy="100.0" iyz="0.0" izz="100.0"/>
+       </inertial>
+        <gazebo>
+          <turnGravityOff>true</turnGravityOff>
+        </gazebo>
+     </link>
+     <joint name="head_joint" type="revolute">
+       <parent link="body_link"/>
+       <child link="head_link"/>
+       <axis xyz="0 0 1"/>
+       <limit lower="${bh_l}" upper="${bh_u}" velocity="1.0" effort="60.0"/>
+       <dynamics damping="${damping_value}" friction="${friction_value}"/>
+       <origin xyz="0.0 0.0 1.1291930" rpy="0 0 0"/>
+     </joint>
+     <!--    
+  <link name="obj_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://anya_v2/meshes/table1.dae" scale="0.025 0.03 0.015"/>
+      </geometry>
+      <origin xyz="0 0 0.0" rpy="0 0 0.0"/>
+    </visual>
+  </link>  
+     <joint name="obj_joint" type="fixed">
+       <parent link="obj_link"/>
+       <child link="body_link"/>
+       <origin xyz="-0.4 -0.2 -0.55" rpy="0 0 1.575"/>
+     </joint> 
+     -->
+
+
+
+    <joint name="body_kinect" type="fixed">
+         <parent link="body_link"/>
+         <child link="kinect_link"/>
+         <origin xyz="0 -0.05 1" rpy="0 0 -1.57079632679"/>
+         <!-- <dynamics damping="${damping_value}" friction="${friction_value}"/> -->
+    </joint> 
+
+  <transmission name="Trans_1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_sholder">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="Trans_2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_sholder">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor2">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="Trans_3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="head_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor3">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+   <!-- <transmission name="Trans_4">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="laj_1">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor4">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+   <transmission name="Trans_5">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="laj_2">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor5">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+   <transmission name="Trans_6">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="laj_3">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor6">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+   <transmission name="Trans_7">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="laj_4">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor7">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission> -->
+
+ 
+
+  <gazebo>
+    <plugin name="control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/v2_main_body</robotNamespace>
+    </plugin>
+  </gazebo>
+  <gazebo>
+    <plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+      <jointName>right_sholder,left_sholder,head_joint,laj_1,laj_2,laj_3,laj_4,raj_1,raj_2,raj_3,raj_4 </jointName>
+    </plugin>
+  </gazebo>
+</robot>

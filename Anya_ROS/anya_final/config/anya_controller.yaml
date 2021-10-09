@@ -1,0 +1,43 @@
+anya_controller:
+  type: "position_controllers/JointTrajectoryController"
+  joints:
+    - left_sholder
+    - laj_1
+    - laj_2
+    - laj_3
+    - gripper_joint
+    - finger_joint_1
+    - finger_joint_2
+/gazebo_ros_control:
+  pid_gains:
+    left_sholder:
+     p: 100.0
+     i: 0.01
+     d: 10.0
+    laj_1:
+     p: 100.0
+     i: 0.01
+     d: 10.0
+    laj_2:
+     p: 100.0
+     i: 0.01
+     d: 10.0
+    laj_3:
+     p: 100.0
+     i: 0.01
+     d: 10.0
+    gripper_joint:
+     p: 100.0
+     i: 0.01
+     d: 10.0
+    finger_joint_1:
+     p: 100.0
+     i: 0.01
+     d: 10.0
+    finger_joint_2:
+     p: 100.0
+     i: 0.01
+     d: 10.0 
+
+
+  

@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+  <robot xmlns:xacro="http://ros.org/wiki/xacro" name="anya_right">
+   
+  <xacro:property name="scale" value="0.001" />
+  <xacro:property name="raj_1_l" value="-3.14159" />
+  <xacro:property name="raj_1_u" value="3.14159"  />
+
+  <xacro:property name="raj_2_l" value="-3.14159" />
+  <xacro:property name="raj_2_u" value="3.14159"  />
+
+  <xacro:property name="raj_3_l" value="-3.14159" />
+  <xacro:property name="raj_3_u" value="3.14159"  />
+
+  <xacro:property name="raj_4_l" value="-3.14159" />
+  <xacro:property name="raj_4_u" value="3.14159"  />
+
+  <!--
+
+    4 links, 4 joints plus one gripper
+
+    raj_(index)  ->    raj stands for right arm joint
+    ral_(index)  ->    ral stands for right arm link
+    rg_(index)  ->    rg stands for right gripper
+
+                    *
+                   ***  Shoulder (not in this file) Here is the stepper motor
+                    *
+                    |
+                    |   
+                    |  ral_1
+                    |
+                    |
+                    *
+                   *** raj_1        Servo Motor 2 
+                    *
+                    |
+                    |  ral_2
+                    |
+                    *
+                   *** raj_2        Servo Motor 3 (axis along the hand)
+                    *
+                    |
+                    |
+                    |  ral_3
+                    |
+                    |
+                    *
+                   *** raj_3         Servo Motor 4 (Elbow Joint)
+                    *
+                    |
+                    |  
+                    |
+                    |
+                    | 
+                    |
+                    |  ral_4
+                    |  
+                    |
+                    |
+                    |
+                    |
+                    *
+                   *** raj_4 Servo Motor 5 (Before Gripper Joint (or) Gripper Roll)
+                    *
+                 ___|____
+                 |       |
+                | |     | |    rg_1   this is the Gripper
+                | |     | |
+                | |     | |
+                 
+
+  -->
+
+
+     <link name="ral_1">
+       <visual>
+          <geometry>   
+            <mesh filename="package://anya_final/meshes/c5.dae" scale="${scale} ${scale} ${scale}"/>                  
+          </geometry>
+          <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>         
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_final/meshes/c5.stl" scale="${scale} ${scale} ${scale}"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.016"/>
+         <inertia ixx="100.0" ixy="0.0" ixz="0.0" iyy="100.0" iyz="0.0" izz="100.0"/>
+       </inertial>
+     </link>
+     <link name="ral_2">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_final/meshes/c4.dae" scale="${scale} ${scale} ${scale}"/>
+        </geometry>
+        <origin xyz="0.0 -0.005 0.0" rpy="0.0 0.0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_final/meshes/c4.stl" scale="${scale} ${scale} ${scale}"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.237"/>
+         <inertia ixx="100.0" ixy="0.0" ixz="0.0" iyy="100.0" iyz="0.0" izz="100.0"/>
+       </inertial>
+     </link>
+     <link name="ral_3">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_final/meshes/c3.dae" scale="${scale} ${scale} ${scale}"/>
+        </geometry>
+        <origin xyz="-0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_final/meshes/c3.stl" scale="${scale} ${scale} ${scale}"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.131"/>
+         <inertia ixx="0.0" ixy="100.0" ixz="0.0" iyy="100.0" iyz="0.0" izz="100.0"/>
+       </inertial>
+     </link>
+     <link name="ral_4">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_final/meshes/c2.dae" scale="${scale} ${scale} ${scale}"/>
+        </geometry>
+        <origin xyz="0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_final/meshes/c2.stl" scale="${scale} ${scale} ${scale}"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.146"/>
+         <inertia ixx="100.0" ixy="0.0" ixz="0.0" iyy="100.0" iyz="0.0" izz="100.0"/>
+       </inertial>
+     </link>
+
+
+     <link name="rg_1">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_final/meshes/gripper.dae" scale="${scale} ${scale} ${scale}"/>
+        </geometry>
+        <origin xyz="-0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_final/meshes/gripper.stl" scale="${scale} ${scale} ${scale}"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.083"/>
+         <inertia ixx="100.0" ixy="0.0" ixz="0.0" iyy="100.0" iyz="0.0" izz="100.0"/>
+       </inertial>
+     </link>
+
+
+
+     <joint name="raj_1" type="revolute">
+       <parent link="ral_1"/>
+       <child link="ral_2"/>
+       <axis xyz="0 1 0"/>
+       <limit lower="${raj_1_l}" upper="${raj_1_u}" velocity="1.0" effort="60.0"/>
+       <origin xyz="0 -0.0 0" rpy="0 0 0"/>
+     </joint> 
+      
+     <joint name="raj_2" type="revolute">
+       <parent link="ral_2"/>
+       <child link="ral_3"/>
+       <axis xyz="1 0 0"/>
+       <limit lower="${raj_2_l}" upper="${raj_2_u}" velocity="1.0" effort="60.0"/>
+       <origin xyz="-0.130 0.025 0.0" rpy="0 0 0"/>
+     </joint>
+     
+     <joint name="raj_3" type="revolute">
+       <parent link="ral_3"/>
+       <child link="ral_4"/>
+       <axis xyz="0 0 1"/>
+       <limit lower="${raj_3_l}" upper="${raj_3_u}" velocity="1.0" effort="60.0"/>
+       <origin xyz="-0.13950 -0.004 -0.02250" rpy="0 0 0"/>
+     </joint>
+     
+     <joint name="raj_4" type="revolute">
+       <parent link="ral_4"/>
+       <child link="rg_1"/>
+       <axis xyz="1 0 0"/>
+       <limit lower="${raj_4_l}" upper="${raj_4_u}" velocity="1.0" effort="60.0"/>
+       <origin xyz="-0.17 0.0 0.02" rpy="0 0 0"/>
+     </joint>      
+
+  </robot>

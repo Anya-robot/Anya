@@ -1,0 +1,81 @@
+v2_main_body:
+#   type: "position_controllers/JointTrajectoryController"
+#   joints:
+#     - right_sholder
+#     - left_sholder
+#     - head_joint
+#    # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50  
+
+  left_arm_controller:
+    type: effort_controllers/JointTrajectoryController
+    joints:
+        - left_sholder
+        - laj_1
+        - laj_2
+        - laj_3
+        - laj_4
+        # - joint6_position_controller
+        # - joint7_position_controller
+
+    gains:
+        left_sholder: { p: 100, d: 10, i: 0.01, i_clamp: 1 }
+        laj_1: { p: 100, d: 10, i: 0.01, i_clamp: 1 }
+        laj_2: { p: 100, d: 10, i: 0.01, i_clamp: 1 }
+        laj_3: { p: 100, d: 10, i: 0.01, i_clamp: 1 }
+        laj_4: { p: 100, d: 10, i: 0.01, i_clamp: 1 }
+        # joint1_position_controller: { p: 7000, d: 50, i: 0.01, i_clamp: 1 }
+        # joint1_position_controller: { p: 2000, d: 20, i: 0.0, i_clamp: 1 }
+
+    constraints:
+        goal_time: 2.0
+
+    state_publish_rate: 25
+
+  # # Position Controllers ---------------------------------------
+  # joint1_position_controller:
+  #   type: effort_controllers/JointPositionController
+  #   joint: right_sholder
+  #   pid: {p: 100.0, i: 0.01, d: 10.0}
+  # joint2_position_controller:
+  #   type: effort_controllers/JointPositionController
+  #   joint: left_sholder
+  #   pid: {p: 100.0, i: 0.01, d: 10.0}
+  # joint3_position_controller:
+  #   type: effort_controllers/JointPositionController
+  #   joint: head_joint
+  #   pid: {p: 100.0, i: 0.01, d: 10.0}
+  # joint4_position_controller:
+  #   type: effort_controllers/JointPositionController
+  #   joint: laj_1
+  #   pid: {p: 100.0, i: 0.01, d: 10.0}
+  # joint5_position_controller:
+  #   type: effort_controllers/JointPositionController
+  #   joint: laj_2
+  #   pid: {p: 100.0, i: 0.01, d: 10.0}
+  # joint6_position_controller:
+  #   type: effort_controllers/JointPositionController
+  #   joint: laj_3
+  #   pid: {p: 100.0, i: 0.01, d: 10.0}
+  # joint7_position_controller:
+  #   type: effort_controllers/JointPositionController
+  #   joint: laj_4
+  #   pid: {p: 100.0, i: 0.01, d: 10.0}
+  # joint8_position_controller:
+  #   type: effort_controllers/JointPositionController
+  #   joint: raj_1
+  #   pid: {p: 100.0, i: 0.01, d: 10.0}
+  # joint9_position_controller:
+  #   type: effort_controllers/JointPositionController
+  #   joint: raj_2
+  #   pid: {p: 100.0, i: 0.01, d: 10.0}
+  # joint10_position_controller:
+  #   type: effort_controllers/JointPositionController
+  #   joint: raj_3
+  #   pid: {p: 100.0, i: 0.01, d: 10.0}
+  # joint11_position_controller:
+  #   type: effort_controllers/JointPositionController
+  #   joint: raj_4
+  #   pid: {p: 100.0, i: 0.01, d: 10.0}

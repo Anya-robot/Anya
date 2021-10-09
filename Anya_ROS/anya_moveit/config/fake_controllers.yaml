@@ -1,0 +1,15 @@
+controller_list:
+  - name: fake_l_hand_controller
+    joints:
+      - l1_joint
+      - l2_joint
+      - l3_joint
+      - l4_joint
+      - l5_joint
+  - name: fake_r_hand_controller
+    joints:
+      - r1_joint
+      - first_joint
+      - second_joint
+      - third_joint
+      - 4th_joint

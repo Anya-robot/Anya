@@ -1,0 +1,18 @@
+controller_list:
+  - name: fake_left_hand_controller
+    joints:
+      - left_sholder
+      - laj_1
+      - laj_2
+      - laj_3
+      - gripper_joint
+  - name: fake_l_gripper_controller
+    joints:
+      - gripper_joint
+      - finger_joint_1
+      - finger_joint_2
+initial:  # Define initial robot poses.
+  - group: left_hand
+    pose: l_pose_1
+  - group: l_gripper
+    pose: l_g_pose_1

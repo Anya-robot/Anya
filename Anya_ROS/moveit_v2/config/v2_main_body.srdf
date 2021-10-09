@@ -1,0 +1,91 @@
+<?xml version="1.0" ?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="v2_main_body">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="left_hand">
+        <link name="left_disk" />
+        <link name="lal_1" />
+        <link name="lal_2" />
+        <link name="lal_3" />
+        <link name="lal_4" />
+        <joint name="left_sholder" />
+        <joint name="laj_1" />
+        <joint name="laj_2" />
+        <joint name="laj_3" />
+        <joint name="laj_4" />
+        <joint name="l1_joint" />
+    </group>
+    <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="pose_l_1" group="left_hand">
+        <joint name="laj_1" value="-1.267" />
+        <joint name="laj_2" value="0.3992" />
+        <joint name="laj_3" value="1.8224" />
+        <joint name="laj_4" value="-1.267" />
+        <joint name="left_sholder" value="-0.4129" />
+    </group_state>
+    <group_state name="pose_l_2" group="left_hand">
+        <joint name="laj_1" value="-2.5514" />
+        <joint name="laj_2" value="2.0654" />
+        <joint name="laj_3" value="0.0521" />
+        <joint name="laj_4" value="3.1415" />
+        <joint name="left_sholder" value="-1.59" />
+    </group_state>
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="gripper" parent_link="lal_4" group="left_hand" parent_group="left_hand" />
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="body_link" link2="head_link" reason="Adjacent" />
+    <disable_collisions link1="body_link" link2="kinect_link" reason="Adjacent" />
+    <disable_collisions link1="body_link" link2="lal_1" reason="Default" />
+    <disable_collisions link1="body_link" link2="left_disk" reason="Adjacent" />
+    <disable_collisions link1="body_link" link2="ral_1" reason="Default" />
+    <disable_collisions link1="body_link" link2="right_disk" reason="Adjacent" />
+    <disable_collisions link1="head_link" link2="kinect_link" reason="Never" />
+    <disable_collisions link1="head_link" link2="lal_1" reason="Never" />
+    <disable_collisions link1="head_link" link2="left_disk" reason="Never" />
+    <disable_collisions link1="head_link" link2="ral_1" reason="Never" />
+    <disable_collisions link1="head_link" link2="right_disk" reason="Never" />
+    <disable_collisions link1="kinect_link" link2="lal_1" reason="Never" />
+    <disable_collisions link1="kinect_link" link2="left_disk" reason="Never" />
+    <disable_collisions link1="kinect_link" link2="ral_1" reason="Never" />
+    <disable_collisions link1="kinect_link" link2="right_disk" reason="Never" />
+    <disable_collisions link1="lal_1" link2="lal_2" reason="Adjacent" />
+    <disable_collisions link1="lal_1" link2="lal_3" reason="Never" />
+    <disable_collisions link1="lal_1" link2="lal_4" reason="Never" />
+    <disable_collisions link1="lal_1" link2="left_disk" reason="Adjacent" />
+    <disable_collisions link1="lal_1" link2="ral_1" reason="Never" />
+    <disable_collisions link1="lal_1" link2="ral_2" reason="Never" />
+    <disable_collisions link1="lal_1" link2="ral_3" reason="Never" />
+    <disable_collisions link1="lal_1" link2="right_disk" reason="Never" />
+    <disable_collisions link1="lal_2" link2="lal_3" reason="Adjacent" />
+    <disable_collisions link1="lal_2" link2="ral_1" reason="Never" />
+    <disable_collisions link1="lal_2" link2="ral_2" reason="Never" />
+    <disable_collisions link1="lal_2" link2="right_disk" reason="Never" />
+    <disable_collisions link1="lal_3" link2="lal_4" reason="Adjacent" />
+    <disable_collisions link1="lal_3" link2="left_disk" reason="Never" />
+    <disable_collisions link1="lal_3" link2="lg_1" reason="Never" />
+    <disable_collisions link1="lal_3" link2="ral_1" reason="Never" />
+    <disable_collisions link1="lal_3" link2="right_disk" reason="Never" />
+    <disable_collisions link1="lal_4" link2="left_disk" reason="Never" />
+    <disable_collisions link1="lal_4" link2="lg_1" reason="Adjacent" />
+    <disable_collisions link1="left_disk" link2="ral_1" reason="Never" />
+    <disable_collisions link1="left_disk" link2="ral_2" reason="Never" />
+    <disable_collisions link1="left_disk" link2="ral_3" reason="Never" />
+    <disable_collisions link1="left_disk" link2="right_disk" reason="Never" />
+    <disable_collisions link1="ral_1" link2="ral_2" reason="Adjacent" />
+    <disable_collisions link1="ral_1" link2="ral_3" reason="Never" />
+    <disable_collisions link1="ral_1" link2="ral_4" reason="Never" />
+    <disable_collisions link1="ral_1" link2="right_disk" reason="Adjacent" />
+    <disable_collisions link1="ral_2" link2="ral_3" reason="Adjacent" />
+    <disable_collisions link1="ral_3" link2="ral_4" reason="Adjacent" />
+    <disable_collisions link1="ral_3" link2="rg_1" reason="Never" />
+    <disable_collisions link1="ral_3" link2="right_disk" reason="Never" />
+    <disable_collisions link1="ral_4" link2="rg_1" reason="Adjacent" />
+    <disable_collisions link1="ral_4" link2="right_disk" reason="Never" />
+</robot>

@@ -1,0 +1,51 @@
+<launch>
+<!-- Convert xacro and put on parameter server -->
+<param name="robot_description" command="$(find xacro)/xacro.py $(find anya_v2)/urdf/v2_main_body.urdf.xacro" />
+
+<!-- gazebo -->
+<arg name="paused" default="false"/>
+<arg name="use_sim_time" default="true"/>
+<arg name="gui" default="true"/>
+<arg name="headless" default="false"/>
+<arg name="debug" default="false"/>
+
+<!--launch GAZEBO with own world configuration -->
+<include file="$(find gazebo_ros)/launch/empty_world.launch">
+	<arg name="debug" value="$(arg debug)"/>
+	<arg name="gui" value="$(arg gui)"/>
+	<arg name="paused" value="$(arg paused)"/>
+	<arg name="use_sim_time" value="$(arg use_sim_time)"/>
+	<arg name="headless" value="$(arg headless)"/>
+</include>
+
+
+<!-- Spawn a robot into Gazebo -->
+<node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model robot" />
+
+<rosparam file ="$(find anya_v2)/config/controller.yaml" command="load"/>
+
+<!-- 
+<node name= "controller_spawner" pkg= "controller_manager" type="spawner" respawn="false" output="screen" args="joint1_position_controller joint2_position_controller joint3_position_controller 
+joint4_position_controller joint5_position_controller joint6_position_controller joint7_position_controller joint_state_controller" ns="/v2_main_body"/>
+ -->
+
+<node name= "controller_spawner" pkg= "controller_manager" type="spawner" respawn="false" output="screen" args="left_arm_controller joint_state_controller" ns="/v2_main_body"/>
+
+
+<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+    <remap from="/joint_states" to="/v2_main_body/joint_states" />
+</node>
+
+<!-- moveit -->
+
+<include file="$(find moveit_v2)/launch/planning_context.launch">
+  <arg name="load_robot_description" value="true"/>
+</include>
+
+<include file="$(find moveit_v2)/launch/move_group.launch" />
+<include file="$(find moveit_v2)/launch/moveit_rviz.launch" />
+
+<node name="joint_state_desired_publisher" pkg="topic_tools" type="relay" args="joint_states joint_states_desired" />
+
+
+</launch>

@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="anya_gripper">
+    <!-- <link name="base_link">
+        
+    </link> -->
+    <link name="gripper_link">
+        <visual>
+            <geometry>
+                <mesh filename="package://anya_final/meshes/gripper_3.dae" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/> 
+        </visual>
+        <collision>
+         <geometry>
+            <mesh filename="package://anya_final/meshes/gripper_3.dae" scale="0.001 0.001 0.001"/>
+         </geometry>
+         <origin xyz="0.0 0.0 -0.0" rpy="0 0 0"/> 
+       </collision>
+       <inertial>
+         <mass value="0.131"/>
+         <inertia ixx="100.0" ixy="0.0" ixz="0.0" iyy="100.0" iyz="0.0" izz="100.0"/>
+       </inertial>
+    </link>
+  
+    <link name="finger_1">
+        <visual>
+            <geometry>
+                <mesh filename="package://anya_final/meshes/finger_1.dae" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <origin xyz="-0.02 -0.017214 0.007" rpy="0 0 0"/> 
+        </visual>
+        <collision>
+         <geometry>
+            <mesh filename="package://anya_final/meshes/finger_1.dae" scale="0.001 0.001 0.001"/>
+         </geometry>
+         <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/> 
+       </collision>
+       <inertial>
+         <mass value="0.131"/>
+         <inertia ixx="100.0" ixy="0.0" ixz="0.0" iyy="100.0" iyz="0.0" izz="100.0"/>
+       </inertial>
+    </link>
+
+    <joint name="finger_joint_1" type="prismatic">
+        <parent link="gripper_link"/>
+        <child link="finger_1"/>
+        <axis xyz="1 0 0"/>
+        <limit lower="-0.0" upper="0.02" velocity="0.5" effort="1000.0"/>
+        <origin xyz="0 -0.0 0.0" rpy="0 0 0"/>
+    </joint>
+
+    <link name="finger_2">
+        <visual>
+            <geometry>
+                <mesh filename="package://anya_final/meshes/finger_1.dae" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <origin xyz="-0.02 -0.017214 0.007" rpy="0 0 0"/> 
+        </visual>
+        <collision>
+         <geometry>
+            <mesh filename="package://anya_final/meshes/finger_1.dae" scale="0.001 0.001 0.001"/>
+         </geometry>
+         <origin xyz="-0.02 -0.017214 0.007" rpy="0 0 0"/> 
+       </collision>
+       <inertial>
+         <mass value="0.131"/>
+         <inertia ixx="100.0" ixy="0.0" ixz="0.0" iyy="100.0" iyz="0.0" izz="100.0"/>
+       </inertial>
+    </link>
+
+    <joint name="finger_joint_2" type="prismatic">
+        <parent link="gripper_link"/>
+        <child link="finger_2"/>
+        <axis xyz="1 0 0"/>
+        <limit lower="-0.0" upper="0.02" velocity="0.5" effort="1000.0"/>
+        <origin xyz="0 0.0 0.0" rpy="0 3.14 0"/>
+    </joint>
+
+</robot>

@@ -1,0 +1,21 @@
+<launch>
+<!-- Convert xacro and put on parameter server -->
+<param name="robot_description" command="$(find xacro)/xacro.py $(find anya_v2)/urdf/v2_main_body.urdf.xacro" />
+<include file="$(find gazebo_ros)/launch/empty_world.launch" />
+<!-- Spawn a robot into Gazebo -->
+<node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model robot" />
+
+<rosparam file ="$(find anya_v2)/config/controller.yaml" command="load"/>
+
+<!-- 
+<node name= "controller_spawner" pkg= "controller_manager" type="spawner" respawn="false" output="screen" args="joint1_position_controller joint2_position_controller joint3_position_controller 
+joint4_position_controller joint5_position_controller joint6_position_controller joint7_position_controller joint_state_controller" ns="/v2_main_body"/>
+ -->
+
+<node name= "controller_spawner" pkg= "controller_manager" type="spawner" respawn="false" output="screen" args="left_arm_controller joint_state_controller" ns="/v2_main_body"/>
+
+
+<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+    <remap from="/joint_states" to="/v2_main_body/joint_states" />
+</node>
+</launch>

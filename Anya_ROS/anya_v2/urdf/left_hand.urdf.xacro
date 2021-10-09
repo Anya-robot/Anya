@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+   <robot xmlns:xacro="http://ros.org/wiki/xacro" name="left_hand">
+     <link name="base_link">
+       <visual>
+          <geometry>   
+            <mesh filename="package://anya_v2/meshes/c5.dae" scale="0.001 0.001 0.001"/>                  
+          </geometry>
+          <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>         
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/c5.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.016"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+     <link name="c4_link">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/c4.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <origin xyz="0.0 -0.005 0.0" rpy="0.0 0.0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/c4.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.237"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+     <joint name="first_joint" type="revolute">
+       <parent link="base_link"/>
+       <child link="c4_link"/>
+       <axis xyz="0 1 0"/>
+       <limit lower="-3.14159" upper="3.14159" velocity="50.0" effort="1000.0"/>
+       <origin xyz="0 -0.0 0" rpy="0 0 0"/>
+     </joint> 
+      <link name="c3_link">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/c3.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <origin xyz="-0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/c3.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.131"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+     <joint name="second_joint" type="revolute">
+       <parent link="c4_link"/>
+       <child link="c3_link"/>
+       <axis xyz="1 0 0"/>
+       <limit lower="-3.14159" upper="3.14159" velocity="50.0" effort="1000.0"/>
+       <origin xyz="-0.130 0.025 0.0" rpy="0 0 0"/>
+     </joint>
+     <link name="c2_link">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/c2.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <origin xyz="0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/c2.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.146"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+     <joint name="third_joint" type="revolute">
+       <parent link="c3_link"/>
+       <child link="c2_link"/>
+       <axis xyz="0 0 1"/>
+       <limit lower="-3.14159" upper="3.14159" velocity="50.0" effort="1000.0"/>
+       <origin xyz="-0.13950 -0.004 -0.02250" rpy="0 0 0"/>
+     </joint>
+     <link name="c1_link">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/c1.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <origin xyz="-0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/c1.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.083"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+     <joint name="4th_joint" type="revolute">
+       <parent link="c2_link"/>
+       <child link="c1_link"/>
+       <axis xyz="1 0 0"/>
+       <limit lower="-3.14159" upper="3.14159" velocity="50.0" effort="1000.0"/>
+       <origin xyz="-0.17 0.0 0.02" rpy="0 0 0"/>
+     </joint>      
+  </robot>

@@ -1,0 +1,376 @@
+<?xml version="1.0"?>
+   <robot xmlns:xacro="http://ros.org/wiki/xacro" name="main_body">
+   
+   <link name="base_link">
+       <visual name="">
+           <origin xyz="0.0 0.0 0.0" rpy="-1.5750 0.0 0.0"/>
+           <geometry>
+               <mesh filename="package://anya_v2/meshes/body.dae" scale="0.001 0.001 0.001"/>
+           </geometry>
+       </visual>
+       <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="-1.5750 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://anya_v2/meshes/body.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+       </collision>
+   </link>
+   
+    <link name="disc1_link">
+       <visual>
+          <geometry>   
+            <mesh filename="package://anya_v2/meshes/disc.dae" scale="0.001 0.001 0.001"/>                  
+          </geometry>
+          <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>         
+       </visual>
+     </link>
+     <joint name="disc1_joint" type="revolute">
+         <parent link="base_link"/>
+         <child link="disc1_link"/>
+         <axis xyz="0 1 0"/>
+         <limit lower="-1.59" upper="1.59" velocity="50.0" effort="1000.0"/>
+         <origin xyz="0.16 -0.01 1.084" rpy="-1.575 1.575 0"/>
+     </joint>
+
+   <link name="lc5_link">
+       <visual>
+          <geometry>   
+            <mesh filename="package://anya_v2/meshes/c5.dae" scale="0.001 0.001 0.001"/>                  
+          </geometry>
+          <origin xyz="0.0 0.0 0" rpy="0 0 0"/>         
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/c5.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.016"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+     <joint name="l1_joint" type="fixed">
+         <parent link="disc1_link"/>
+         <child link="lc5_link"/>
+         <origin xyz="0 -0.035 -0.025" rpy="-1.575 3.14 0"/>
+     </joint>
+     
+     <link name="lc4_link">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/c4.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <origin xyz="0.0 -0.005 0.0" rpy="0.0 0.0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/c4.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.237"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+
+     <joint name="l2_joint" type="revolute">
+       <parent link="lc5_link"/>
+       <child link="lc4_link"/>
+       <axis xyz="0 1 0"/>
+       <limit lower="-3.14159" upper="3.14159" velocity="50.0" effort="1000.0"/>
+       <origin xyz="0 -0.0 0" rpy="0 0 0"/>
+     </joint> 
+
+      <link name="lc3_link">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/c3.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <origin xyz="-0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/c3.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.131"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+
+     <joint name="l3_joint" type="revolute">
+       <parent link="lc4_link"/>
+       <child link="lc3_link"/>
+       <axis xyz="1 0 0"/>
+       <limit lower="-3.14159" upper="3.14159" velocity="50.0" effort="1000.0"/>
+       <origin xyz="-0.130 0.025 0.0" rpy="0 0 0"/>
+     </joint>
+
+     <link name="lc2_link">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/c2.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <origin xyz="0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/c2.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.146"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+
+     <joint name="l4_joint" type="revolute">
+       <parent link="lc3_link"/>
+       <child link="lc2_link"/>
+       <axis xyz="0 0 1"/>
+       <limit lower="-3.14159" upper="3.14159" velocity="50.0" effort="1000.0"/>
+       <origin xyz="-0.13950 -0.004 -0.02250" rpy="0 0 0"/>
+     </joint>
+
+     <link name="lc1_link">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/gripper.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <origin xyz="-0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/gripper.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.083"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+     <joint name="l5_joint" type="revolute">
+       <parent link="lc2_link"/>
+       <child link="lc1_link"/>
+       <axis xyz="1 0 0"/>
+       <limit lower="-3.14159" upper="3.14159" velocity="50.0" effort="1000.0"/>
+       <origin xyz="-0.17 0.0 0.02" rpy="0 0 0"/>
+     </joint>
+     <!--
+     <link name="gripper_link">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/gripper.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <origin xyz="-0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/gripper.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.083"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+     <joint name="gripper_joint" type="fixed">
+       <parent link="lc1_link"/>
+       <child link="gripper_link"/>
+       <origin xyz="-0.113 0.0 0.0" rpy="0 0 0"/>
+     </joint>
+-->
+       <link name="disc_link">
+       <visual>
+          <geometry>   
+            <mesh filename="package://anya_v2/meshes/disc.dae" scale="0.001 0.001 0.001"/>                  
+          </geometry>
+          <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>         
+       </visual>
+     </link>
+     <joint name="disc_joint" type="revolute">
+         <parent link="base_link"/>
+         <child link="disc_link"/>
+         <axis xyz="0 1 0"/>
+         <limit lower="-1.59" upper="1.59" velocity="50.0" effort="1000.0"/>
+         <origin xyz="-0.16 -0.01 1.084" rpy="-1.575 1.575 0"/>
+     </joint>
+     <link name="rone_link">
+       <visual>
+          <geometry>   
+            <mesh filename="package://anya_v2/meshes/c5.dae" scale="0.001 0.001 0.001"/>                  
+          </geometry>
+          <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>         
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/c5.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.016"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+      <joint name="r1_joint" type="fixed">
+         <parent link="disc_link"/>
+         <child link="rone_link"/>
+         <origin xyz="0.0 0.039 0.025" rpy="1.575 3.14 0"/>
+     </joint>
+
+     <link name="c4_link">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/c4.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <origin xyz="0.0 -0.005 0.0" rpy="0.0 0.0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/c4.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.237"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+     <joint name="first_joint" type="revolute">
+       <parent link="rone_link"/>
+       <child link="c4_link"/>
+       <axis xyz="0 1 0"/>
+       <limit lower="-3.14159" upper="3.14159" velocity="50.0" effort="1000.0"/>
+       <origin xyz="0 -0.0 0" rpy="0 0 0"/>
+     </joint> 
+      <link name="c3_link">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/c3.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <origin xyz="-0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/c3.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.131"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+     <joint name="second_joint" type="revolute">
+       <parent link="c4_link"/>
+       <child link="c3_link"/>
+       <axis xyz="1 0 0"/>
+       <limit lower="-3.14159" upper="3.14159" velocity="50.0" effort="1000.0"/>
+       <origin xyz="-0.130 0.025 0.0" rpy="0 0 0"/>
+     </joint>
+     <link name="c2_link">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/c2.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <origin xyz="0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/c2.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.146"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+     <joint name="third_joint" type="revolute">
+       <parent link="c3_link"/>
+       <child link="c2_link"/>
+       <axis xyz="0 0 1"/>
+       <limit lower="-3.14159" upper="3.14159" velocity="50.0" effort="1000.0"/>
+       <origin xyz="-0.13950 -0.004 -0.02250" rpy="0 0 0"/>
+     </joint>
+     <link name="c1_link">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/gripper.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <origin xyz="-0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/gripper.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.083"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+     
+     <joint name="4th_joint" type="revolute">
+       <parent link="c2_link"/>
+       <child link="c1_link"/>
+       <axis xyz="1 0 0"/>
+       <limit lower="-3.14159" upper="3.14159" velocity="50.0" effort="1000.0"/>
+       <origin xyz="-0.17 0.0 0.02" rpy="0 0 0"/>
+     </joint>
+     <!--   
+     <link name="rgripper_link">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/gripper.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <origin xyz="-0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/gripper.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.083"/>
+         <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+       </inertial>
+     </link>
+     <joint name="rgripper_joint" type="fixed">
+       <parent link="c1_link"/>
+       <child link="rgripper_link"/>
+       <origin xyz="-0.113 0.0 0.0" rpy="0 0 0"/>
+     </joint>
+-->
+     <link name="head_link">
+       <visual>
+        <geometry>
+          <mesh filename="package://anya_v2/meshes/head3.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <origin xyz="-0 0 0.0" rpy="0 0 0.0"/>
+       </visual>
+       <collision>
+         <geometry>
+            <mesh filename="package://anya_v2/meshes/head3.stl" scale="0.001 0.001 0.001"/>
+         </geometry>
+       </collision>
+     </link>
+     <joint name="head_joint" type="revolute">
+       <parent link="base_link"/>
+       <child link="head_link"/>
+       <axis xyz="0 0 1"/>
+       <limit lower="-3.14159" upper="3.14159" velocity="50.0" effort="1000.0"/>
+       <origin xyz="0.0 0.0 1.1291930" rpy="0 0 0"/>
+     </joint>    
+  <!-- <link name="obj_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://anya_v2/meshes/table1.dae" scale="0.025 0.03 0.015"/>
+      </geometry>
+      <origin xyz="0 0 0.0" rpy="0 0 0.0"/>
+    </visual>
+  </link>  
+     <joint name="obj_joint" type="fixed">
+       <parent link="obj_link"/>
+       <child link="base_link"/>
+       <origin xyz="-0.4 -0.2 -0.55" rpy="0 0 1.575"/>
+     </joint>   -->
+   </robot>

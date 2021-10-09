@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="anya_full">
+<xacro:include filename="$(find urdf)/main_body.urdf.xacro"/>
+
+</robot>

@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: anya_v2
+    relative_path: urdf/v2_main_body.urdf.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/v2_main_body.srdf
+  CONFIG:
+    author_name: anya
+    author_email: anyaanokha@gmail.com
+    generated_timestamp: 1603041411

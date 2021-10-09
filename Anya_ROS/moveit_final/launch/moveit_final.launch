@@ -1,0 +1,7 @@
+<launch>
+    <include file="$(find anya_final)/launch/anya_final.launch" />
+    <include file="$(find moveit_final)/launch/move_group.launch" />
+    <include file="$(find moveit_final)/launch/moveit_rviz_new.launch" >
+        <arg name="config" value="True"/>
+    </include>
+</launch>

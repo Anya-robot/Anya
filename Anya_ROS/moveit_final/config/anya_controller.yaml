@@ -1,0 +1,13 @@
+controller_manager_ns: /
+controller_list:
+  - name: anya_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    joints:
+    - left_sholder
+    - laj_1
+    - laj_2
+    - laj_3
+    - gripper_joint
+    - finger_joint_1
+    - finger_joint_2

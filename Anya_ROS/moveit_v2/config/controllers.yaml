@@ -1,0 +1,81 @@
+# v2_main_body:
+  # joint_state_controller:
+  #   type: joint_state_controller/JointStateController
+  #   publish_rate: 50
+  # arm_controller:
+  #   type: position_controllers/JointTrajectoryController
+  #   joints:
+  #     - left_sholder
+  #     - laj_1
+  #     - laj_2
+  #     - laj_3
+  #     - laj_4
+  #   gains:
+  #     left_sholder: {p: 100.0, i: 0.01, d: 10.0, i_clamp: 1}
+  #     laj_1: {p: 100.0, i: 0.01, d: 10.0, i_clamp: 1}
+  #     laj_2: {p: 100.0, i: 0.01, d: 10.0, i_clamp: 1}
+  #     laj_3: {p: 100.0, i: 0.01, d: 10.0, i_clamp: 1}
+  #     laj_4: {p: 100.0, i: 0.01, d: 10.0, i_clamp: 1}
+
+controller_list:
+  - name: v2_main_body/left_arm_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - left_sholder
+      - laj_1
+      - laj_2
+      - laj_3
+      - laj_4
+    # gains:
+    #   left_sholder: {p: 100.0, i: 0.01, d: 10.0, i_clamp: 1}
+    #   laj_1: {p: 100.0, i: 0.01, d: 10.0, i_clamp: 1}
+    #   laj_2: {p: 100.0, i: 0.01, d: 10.0, i_clamp: 1}
+    #   laj_3: {p: 100.0, i: 0.01, d: 10.0, i_clamp: 1}
+    #   laj_4: {p: 100.0, i: 0.01, d: 10.0, i_clamp: 1}
+
+# joint1_position_controller:
+#   type: effort_controllers/JointPositionController
+#   joint: right_sholder
+#   pid: {p: 100.0, i: 0.01, d: 10.0}
+# joint2_position_controller:
+#   type: effort_controllers/JointPositionController
+#   joint: left_sholder
+#   pid: {p: 100.0, i: 0.01, d: 10.0}
+# joint3_position_controller:
+#   type: effort_controllers/JointPositionController
+#   joint: head_joint
+#   pid: {p: 100.0, i: 0.01, d: 10.0}
+# joint4_position_controller:
+#   type: effort_controllers/JointPositionController
+#   joint: laj_1
+#   pid: {p: 100.0, i: 0.01, d: 10.0}
+# joint5_position_controller:
+#   type: effort_controllers/JointPositionController
+#   joint: laj_2
+#   pid: {p: 100.0, i: 0.01, d: 10.0}
+# joint6_position_controller:
+#   type: effort_controllers/JointPositionController
+#   joint: laj_3
+#   pid: {p: 100.0, i: 0.01, d: 10.0}
+# joint7_position_controller:
+#   type: effort_controllers/JointPositionController
+#   joint: laj_4
+#   pid: {p: 100.0, i: 0.01, d: 10.0}
+# joint8_position_controller:
+#   type: effort_controllers/JointPositionController
+#   joint: raj_1
+#   pid: {p: 100.0, i: 0.01, d: 10.0}
+# joint9_position_controller:
+#   type: effort_controllers/JointPositionController
+#   joint: raj_2
+#   pid: {p: 100.0, i: 0.01, d: 10.0}
+# joint10_position_controller:
+#   type: effort_controllers/JointPositionController
+#   joint: raj_3
+#   pid: {p: 100.0, i: 0.01, d: 10.0}
+# joint11_position_controller:
+#   type: effort_controllers/JointPositionController
+#   joint: raj_4
+#   pid: {p: 100.0, i: 0.01, d: 10.0}

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!-- try 2 -->
+  <robot xmlns:xacro="http://ros.org/wiki/xacro" name="v2_transmission">
+  <transmission name="Trans_1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_sholder">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="Trans_2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_sholder">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor2">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="Trans_3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="head_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor3">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+</robot>
+
+<!-- hi tatwik -->

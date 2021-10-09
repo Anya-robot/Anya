@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+  <robot xmlns:xacro="http://ros.org/wiki/xacro" name="test">
+
+<link name="base_link">     
+    </link>
+
+
+<link name="test_link">    
+    <inertial>
+      <mass value="0.2"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="100" ixy="0" ixz="0" iyy="100" iyz="0" izz="100"/>
+    </inertial>
+    
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <mesh filename="package://anya_slam1/meshes/castor_wheel.stl" scale="1 1 1"/> 
+      </geometry>
+    </collision>
+    
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+         <mesh filename="package://anya_slam1/meshes/castor_wheel.dae" scale="1 1 1"/> 
+      </geometry>      
+    </visual>
+  </link>
+
+<joint name="fixed_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="test_link"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0 0.0 0.0"/>
+</joint>
+    
+</robot>
